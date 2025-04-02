@@ -18,6 +18,7 @@ const CONFIG = {
   client: "evolyticsamericaspar",
   organizationId: "48EA40C35A8FFF670A495E61@AdobeOrg",
   timeout: 10000,
+  decisioningMethod: "server-side",
   logger: console
 };
 const targetClient = TargetClient.create(CONFIG);
@@ -61,7 +62,7 @@ function sendHtml(res, targetResponse) {
         experience = o.options[0].responseTokens["experience.name"];
         content = o.options[0].content;
       }
-      tableRows.push("<tr><td>"+mbox+"</td><td>"+activity+"</td><td>"+experience+"</td><td>"+method+"</td><td><pre>"+JSON.stringify(content, null, " ").replace(/[\\\n\r]/g, "")+"</pre></td><td>"+requestId+"</td></tr>")
+      //tableRows.push("<tr><td>"+mbox+"</td><td>"+activity+"</td><td>"+experience+"</td><td>"+method+"</td><td><pre>"+JSON.stringify(content, null, " ").replace(/[\\\n\r]/g, "")+"</pre></td><td>"+requestId+"</td></tr>")
     }catch(e){
       console.log("Error:",e)
     }
@@ -108,22 +109,30 @@ app.get("/", async (req, res) => {
     req.cookies[TargetClient.TargetLocationHintCookieName];
 
   // WE CAN PASS MULTIPLE MBOXES IN THE SAME REQUEST
-  
+  console.log("VISITOR COOKIE: ", visitorCookie);
+  console.log("TARGET COOKIE:",targetCookie);
+  console.log("TARGET LOCATION HINT:",targetLocationHintCookie)
   const request = {
     execute: {
       mboxes: [
         {
           address: getAddress(req),
-          name: "server-side-mbox",
+          name: "brock-test-mbox",
           profileParameters: {
             "allianceId": "medi1234"
           }
         },
         {
           address: getAddress(req),
-          name: "brock-test-mbox"
+          name: "test-server-mbox"
         }
       ]
+    },
+    experienceCloud: {
+      analytics: {
+        logging: "server_side",
+        trackingServer: "tmd.sc.omtrdc.net",
+      }
     }
   };
 

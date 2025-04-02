@@ -19,6 +19,7 @@
       padding: 5px 10px;
     }
   </style>
+  <script src="https://assets.adobedtm.com/98fb57e4557f/813a45c80aa3/launch-9c962d64ad8d-development.min.js" async></script>
 </head>
 <body>
   <h1>Target Server-Side Responses</h1>
@@ -36,7 +37,5 @@
     </tbody>
   </table>
   <pre>${content}</pre>
-  <script src="AppMeasurement.js"></script>
-  <script>var s_code=s.t();if(s_code)document.write(s_code);</script>
 </body>
 </html>
